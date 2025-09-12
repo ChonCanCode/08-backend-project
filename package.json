@@ -8,5 +8,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "A simple backend server."
+  "description": "A simple backend server.",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }
