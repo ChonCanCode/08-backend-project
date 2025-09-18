@@ -2,9 +2,7 @@ const express = require("express");
 const app = express();
 const PORT = 8383;
 
-let data = {
-  name: "Hehee",
-};
+let data = ["Hehee"];
 
 app.use(express.json());
 
@@ -32,6 +30,7 @@ app.get("/api/data", (req, res) => {
 app.post("/api/data", (req, res) => {
   const newEntry = req.body;
   console.log(newEntry);
+  data.push(newEntry.name);
   res.sendStatus(201);
 });
 
