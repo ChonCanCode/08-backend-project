@@ -1,0 +1,12 @@
+{
+  "name": "project-2",
+  "version": "1.0.0",
+  "description": "1. Installing Node Version Manager - https://github.com/nvm-sh/nvm?tab=readme-ov-file\r    - Why is it important? Why do we need it in this project?",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
