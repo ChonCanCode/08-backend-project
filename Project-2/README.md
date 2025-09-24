@@ -83,5 +83,43 @@
    - 'import.meta' - a special built-in object that contains metadata about the current ES Module.
    - 'import.meta.url' - the URL of the current module file
 6. app.use(express.static(path.join(\_\_dirname, "../public")))
+
    - After the 'index.html' is loaded it will enable to obtain other files in the same folder
    - It tells Express - If aa reqeuest comes in for a file, look inside the "../public" and serve it automatically if it exists.
+
+### 20250924 - SQLite
+
+1. What is SQLite?
+
+   - A Lightweight, embedded, relational database management system (RDBMS). It is simple, self-contained and serverless.
+
+2. `import { DatabaseSync } from "node:sqlite";`:
+
+   - Importing the synchronous SQLite databse class from the `node:sqlite` package.
+   - `DatabaseSync` enable you to work with SQLite in a blocking (synchronous) way, instead of asynchronous promises/callbacks.
+
+3. `const db = new DatabaseSync(":memory:");`:
+
+   - `new DatabaseSync(":memory")` creates a temporary in-memory databse that exists only ywhen your program runs.
+     - `new` JS does 4 things under the hood, you need this when calling a class or a constructuor function that is designed to initilise an object:
+       1. Create a new object `{}`
+       2. Sets the object's prototype to `something.prototype`
+       3. Runs the `DatabaseSync()` function as a constructuor
+       4. Return the new object
+
+4. Create the `users Table
+
+   ```
+      db.exec(`
+         CREATE TABLE user(
+         id INTEGER,
+         username TEXT UNIQUE,
+         password TEXT
+         )
+      `);
+   ```
+
+- `db.exec()` executes raw SQL statements.
+- `CREATE TABLE user (...)` defines a new table named user with columns:
+  - `id INTEGER` > a number field
+  - `username TEXT UNIQUE` > a text field that must be unique (no tow users can have the same username).
