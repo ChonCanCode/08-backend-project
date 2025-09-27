@@ -123,3 +123,8 @@
 - `CREATE TABLE user (...)` defines a new table named user with columns:
   - `id INTEGER` > a number field
   - `username TEXT UNIQUE` > a text field that must be unique (no tow users can have the same username).
+
+### 20250927 - endpoint minuplation
+
+1. What is `endpoint` and what is it important in backend?
+
