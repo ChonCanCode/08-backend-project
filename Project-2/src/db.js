@@ -4,7 +4,7 @@ const db = new DatabaseSync(":memory:");
 //Execute SQL statements from strings
 db.exec(`
      CREATE TABLE users(
-     id INTEGER PRIMARY KEY AUTUINCREMENT,
+     id INTEGER PRIMARY KEY AUTOINCREMENT,
      username TEXT UNIQUE,
      password TEXT 
      )
@@ -12,7 +12,7 @@ db.exec(`
 
 db.exec(`
     CREATE TABLE todos (
-    id INTEGER PRIMARY KEY AUTUINCREMENT,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER, 
     task TEXT,
     completed BOOLEAN DEFAULT 0,

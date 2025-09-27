@@ -124,7 +124,23 @@
   - `id INTEGER` > a number field
   - `username TEXT UNIQUE` > a text field that must be unique (no tow users can have the same username).
 
-### 20250927 - endpoint minuplation
+### 20250927 - endpoint,
 
 1. What is `endpoint` and what is it important in backend?
 
+- An `endpoint` is a specific URL route in your backend that your frontend or client can talk to. It usually responds to a particular HTTP method (`GET`,`POST`,`PUT`,`DELETE`, etc)
+
+2. `app.use(...)`
+
+- Is like a filter if it matching its requirement it will perform a certain function, so it will take in all information first then decide whether to react.
+
+  - `app.use(express.json())` does not blindly parse every incoming request, it only acts on requests that have
+
+    ```
+    http
+
+    content-type: application/json
+    ```
+
+  - `app.use(express.static(...))` if request matches a static file, sersve it.
+  - `app.use("/auth", authRoutes)` If the incoming request path starts with /auth, Express will forward it to the authRoutes router.
