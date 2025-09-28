@@ -8,7 +8,7 @@ POST http://localhost:5000/auth/register
 Content-Type: application/json
 
 {
-    "username" : "Hehee",
+    "username" : "Hehee@gmail.com",
     "password" : "123123"
 }
 
