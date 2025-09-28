@@ -124,7 +124,7 @@
   - `id INTEGER` > a number field
   - `username TEXT UNIQUE` > a text field that must be unique (no tow users can have the same username).
 
-### 20250927 - endpoint,
+### 20250927 - Understand endpoint better, and how middleware work like if.. then...
 
 1. What is `endpoint` and what is it important in backend?
 
@@ -144,3 +144,46 @@
 
   - `app.use(express.static(...))` if request matches a static file, sersve it.
   - `app.use("/auth", authRoutes)` If the incoming request path starts with /auth, Express will forward it to the authRoutes router.
+
+### 20250928 -
+
+1. `todo-app.rest` emulation, ensuring both register and login have endpoint enabling with a location for them to reach e.g.
+
+   ```
+   router.post("/register", (req, res) => {
+   const { username, password } = req.body;
+   console.log(username, password);
+   res.sendStatus(201);
+   });
+   ```
+
+2. Leaning how to `encrypt` the password
+
+```
+import bcrypt from "bcryptjs";
+
+router.post("/register", (req, res) => {
+  const { username, password } = req.body;
+  const hashedPassword = bcrypt.hashSync(password, 8);
+});
+```
+
+1.  `import bcrypt from "bcryptjs";`
+
+- importing bcryptji libaray which is a JS implementation of the bcrypt algorithm.
+- bcrypt is a hashing function designed for securely storing passwords, hashing function is special type of mathematical function that takes an input and turns it into a fixed-length string of characters usually looking random.
+-
+
+2. `const { username, password } = req.body;`
+
+- This extrac the usesrname and password from the JSON content which parsed via middelware `app.use(express.json())`.
+
+3. `const hashedPassword = bcrypt.hashSync(password, 8)`
+
+- It returns a hashed version of the passwrod.
+- `password` the plane password from the user
+- `8` -> teh salt rounds (also called cost factor)
+  - it tells bcrypt how many times to process teh data.
+  - Higher number = more secure by slower
+  - common values: 8 - 12
+- `hashSync` means it runs synchronously (blocking). There's also `hash` (async, uses, callbacks or promises).

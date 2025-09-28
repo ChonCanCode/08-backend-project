@@ -5,8 +5,22 @@ import db from "../db.js";
 
 const router = express.Router();
 
-router.post("/register", (req, res) => {});
+router.post("/register", (req, res) => {
+  const { username, password } = req.body;
+  const hashedPassword = bcrypt.hashSync(password, 8);
 
-router.post("/login", (req, res) => {});
+  try {
+    const insertUser = db.prepare(``);
+  } catch (err) {
+    console.log(err.message);
+    res.sendStatus(503);
+  }
+});
+
+router.post("/login", (req, res) => {
+  const { username, password } = req.body;
+  console.log(username, password);
+  res.sendStatus(201);
+});
 
 export default router;
