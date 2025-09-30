@@ -190,7 +190,7 @@ router.post("/register", (req, res) => {
 
 ### 20250929 - Code review authRoutes.js
 
-1.
+1. `.Router()`, `jwt/jsonwebtoken`,
 
 ```
 js
@@ -211,7 +211,7 @@ const router = express.Router();
   - `express.Router()` designed to be mounted onto your main app.
 - `jsonwebtoken`(`jwt`) - Is a library to generate tokens so users can stayed logged in without sending their password every time.
 
-2.
+2. `db.prepare(...)`, `VALUES (?, ?)`
 
 ```
 js
@@ -232,3 +232,29 @@ INSERT INTO users(username, password)
 VALUES ('hacker'); DROP TABLE users; --', 'hashedpass'
 
 ```
+
+### 20250930 - Code review
+
+1. `try {...} catch (err) {...}`
+   1. `try {...}` block
+      - JS executes everything inside the `try` block normally.
+      - If everything succeeds, it moves on and the `catch` block is ignored.
+   2. If an error happens (e.g., database insert fails, JWT signing throws an eroor, etc.):
+      - JS immediately jumps out of the `try` block.
+      - It skips the rest of the code in `try`.
+      - Then it executes the `catch (err) {...}`block.
+2. `.lastInsertRowid`
+
+   - We are using better-sqlite3(`db.prepare(...).run(...)`)
+   - When we call `.run(...)` on an `INSERT` statement, it returns an object like this:
+
+     ```
+     js
+
+     {
+        chenges: 1, // how many rows were inserted/updated/deleted
+        lastInsertRowid: 5 // the ID (primary key) of the last inserted row.
+     }
+     ```
+
+   - `lastInsertRowid` give you the new user's unique ID (the value of their `id` column, assuming `users.id` is `INTEGER PRIMARY KEY AUTOINCREMENT`)
