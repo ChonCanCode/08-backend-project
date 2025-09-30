@@ -145,7 +145,7 @@
   - `app.use(express.static(...))` if request matches a static file, sersve it.
   - `app.use("/auth", authRoutes)` If the incoming request path starts with /auth, Express will forward it to the authRoutes router.
 
-### 20250928 -
+### 20250928 - Moving on to todo, learning bcrypt
 
 1. `todo-app.rest` emulation, ensuring both register and login have endpoint enabling with a location for them to reach e.g.
 
@@ -187,3 +187,48 @@ router.post("/register", (req, res) => {
   - Higher number = more secure by slower
   - common values: 8 - 12
 - `hashSync` means it runs synchronously (blocking). There's also `hash` (async, uses, callbacks or promises).
+
+### 20250929 - Code review authRoutes.js
+
+1.
+
+```
+js
+
+import express from "express";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import db from "../db.js";
+
+const router = express.Router();
+```
+
+- `express.Router()` - creates a mini-router object that you can mount insdie your main server (`app.use("/auth", router)` for example)
+  - It is like a mini Express app that only handles routes and middleware.
+  - Instead of putting everything in to `server.js` or `app.js`, you group related routes into separarte files.
+  - Then you "mount" that router into your main app wiht `app.use()`
+  - Avoid multiple servers, if calling `express()` in every route file, you would be making multiple app instances. Only one app should call `.listen()` to start the server.
+  - `express.Router()` designed to be mounted onto your main app.
+- `jsonwebtoken`(`jwt`) - Is a library to generate tokens so users can stayed logged in without sending their password every time.
+
+2.
+
+```
+js
+
+const insertUser = db.prepare(
+  `INSERT INTO users(username, password) VALUES (?, ?)`
+);
+insertUser.run(username, hashedPassword);
+```
+
+- Uses ? placeholders to prevent SQL injection.
+- if user signs up with `username = "hacker'); DROP TABLE users; --"`
+
+```
+sql
+
+INSERT INTO users(username, password)
+VALUES ('hacker'); DROP TABLE users; --', 'hashedpass'
+
+```
