@@ -258,3 +258,7 @@ VALUES ('hacker'); DROP TABLE users; --', 'hashedpass'
      ```
 
    - `lastInsertRowid` give you the new user's unique ID (the value of their `id` column, assuming `users.id` is `INTEGER PRIMARY KEY AUTOINCREMENT`)
+
+### 20251002 - code review
+
+1. `token`
