@@ -261,4 +261,50 @@ VALUES ('hacker'); DROP TABLE users; --', 'hashedpass'
 
 ### 20251002 - code review
 
-1. `token`
+1. Trying to understand pathing better
+
+   - `app.use("/auth", authRoutes)` and `app.use("/todos", authMiddleware, todoRoutes)`
+   - These defined backend routes (API endpoints), but htey can be accessed by a user directly via the vrowser or any HTTP client.
+   - These are backend routes, but user can still access them directly y entering the URL.
+
+2. Why homepage url remained the same, after the page already showing todo page?
+
+   - Your frontend (HTML/JS) handles routing on the client side — e.g., showing the “Todo list page” after login.
+   - When you navigate to the todo list inside the frontend, you are not actually asking the server for a new page.
+   - The browser URL stays http://localhost:5000/.
+   - The frontend JavaScript changes what is displayed inside the page (DOM) instead of loading a new HTML page.
+
+   This is exactly how Single-Page Applications (SPA) work — frameworks like React, Vue, or even plain JS can do this.
+
+3. How the backend /todos API fits in
+
+   - When you see the todo list, the frontend probably makes an AJAX/fetch request to /todos:
+
+     ```
+     fetch("/todos")
+     .then(res => res.json())
+     .then(data => renderTodoList(data));
+     ```
+
+     The data comes from the backend, but the page doesn’t reload, so the URL in the browser stays /.
+
+4. Why the URL doesn’t change
+
+   - Only navigation to a new page served by the backend changes the URL.
+
+   In SPA setups:
+
+   - Backend endpoints like /todos are API calls, not pages.
+   - The frontend updates the visible content without changing the browser URL.
+
+   ```
+   How does this enabling id to be added on to the task:
+   `const result = insertTodo.run(req.userID, task);
+   res.json({ id: result.lastInsertRowid, task, completed: 0 });`
+   ```
+
+   ```
+   Comparing to:
+   insertTodo.run(req.userID, task);
+   res.json({ id: insertTodo.lastID, task, completed: 0 });
+   ```

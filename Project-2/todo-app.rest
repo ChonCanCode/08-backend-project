@@ -20,5 +20,17 @@ Content-Type: application/json
 
 {
     "username" : "Hehee@gmail.com",
-    "password" : "123"
+    "password" : "123123"
+}
+### Fetch all todos GET/ TODOS (protected)
+GET http://localhost:5000/todos
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzU5NDg2MDA0LCJleHAiOjE3NTk1NzI0MDR9.AhzPaAcGI0TxACu8euIUMiAvS7jUfXDEOgNyyIPOyi4
+
+### Creates a new todo POST/ TODOS (protected)
+POST http://localhost:5000/todos
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzU5NDg2MDA0LCJleHAiOjE3NTk1NzI0MDR9.AhzPaAcGI0TxACu8euIUMiAvS7jUfXDEOgNyyIPOyi4
+Content-Type: application/json
+
+{
+    "task" : "Finish the project."
 }
