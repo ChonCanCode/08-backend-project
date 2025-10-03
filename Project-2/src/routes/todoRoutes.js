@@ -20,7 +20,17 @@ router.post("/", (req, res) => {
   res.json({ id: result.lastInsertRowid, task, completed: 0 });
 });
 
-router.put("/:id", (req, res) => {});
+router.put("/:id", (req, res) => {
+  const { completed } = req.body;
+  const { id } = req.params;
+  const { page } = req.query;
+
+  const updatedTodo = db.prepare("UPDATE todos SET completed =? WHERE id = ?");
+
+  updatedTodo.run(completed, id);
+
+  res.json({ message: "Todo completed." });
+});
 
 router.delete("/:id", (req, res) => {});
 

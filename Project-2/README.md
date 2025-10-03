@@ -297,6 +297,10 @@ VALUES ('hacker'); DROP TABLE users; --', 'hashedpass'
    - Backend endpoints like /todos are API calls, not pages.
    - The frontend updates the visible content without changing the browser URL.
 
+###20251003 - Code review
+
+1. `.lastInsertRowid` / `.lastID`
+
    ```
    How does this enabling id to be added on to the task:
    `const result = insertTodo.run(req.userID, task);
