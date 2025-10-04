@@ -312,3 +312,36 @@ VALUES ('hacker'); DROP TABLE users; --', 'hashedpass'
    insertTodo.run(req.userID, task);
    res.json({ id: insertTodo.lastID, task, completed: 0 });
    ```
+
+### 20251004 - Code review - `authMiddleware.js`
+
+```
+js
+
+import jwt from "jsonwebtoken";
+
+function authMiddleware(req, res, next) {
+  const token = req.headers["authorization"];
+
+  if (!token) {
+    return res.status(401).json({ message: "No token provided" });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ message: "Invalid token" });
+    }
+    req.userID = decoded.id;
+    next();
+  });
+}
+
+export default authMiddleware;
+```
+
+1. Confusion on why using parameters `(req, res, next)` in here when express() is absence?
+   - We did't create `req`, `res`, `next`. Instead we defined a function signature that Express use.
+   - In `server.js` this `app.use(authMiddleware)` at this point Express now "owns" the middelware. express will call your function every time a request comes in and it will auomatically pass in
+     - `req` - the request object for that HTTP request ( headers, body, params, etc)
+     - `res` - the response object your can use to send data back to the client
+     - `next` - a function provided by Express to let you say "I'm done, continue to the next middelware o rroute"
