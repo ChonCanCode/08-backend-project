@@ -15,10 +15,16 @@ datasource db {
 }
 
 model User {
-  id        init    @id @default(autoincrement())
+  id        Int    @id @default(autoincrement())
   username  String  @unique
   password  String
   todos     Todo[]
 }
 
-model Todos
+model Todo {
+  id        Int   @id @default(autoincrement())
+  task      String
+  completed Boolean   @default(false)
+  userId    Int
+  user      User      @relation(fields: [userId], reference: [id])
+}

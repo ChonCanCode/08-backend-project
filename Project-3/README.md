@@ -9,3 +9,7 @@
    2. `npm install prisma @prisma/client pg`
    - What is this?
    3. Start modification to create the prisma client.
+
+### 20251008 - Creating `schema.prisma`
+
+1.
