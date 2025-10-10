@@ -5,19 +5,23 @@ import db from "../db.js";
 
 const router = express.Router();
 
-router.post("/register", (req, res) => {
+router.post("/register", async (req, res) => {
   const { username, password } = req.body;
   const hashedPassword = bcrypt.hashSync(password, 8);
 
   try {
-    const insertUser = db.prepare(
-      `INSERT INTO users(username, password) VALUES (?, ?)`
-    );
-    const result = insertUser.run(username, hashedPassword);
+    const user = await prisma.user.create({
+      data: {
+        username,
+        password: hashedPassword,
+      },
+    });
+
     const defaultTodo = `Hello! Add your first todo!`;
-    const insertTodo = db.prepare(
-      `INSERT INTO todos (user_id, task) VALUES (?, ?)`
-    );
+    await prisma.todo.create({
+      task: defaultTodo,
+      userId: user.id,
+    });
     insertTodo.run(result.lastInsertRowid, defaultTodo);
     const token = jwt.sign(
       { id: result.lastInsertRowid },
