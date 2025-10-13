@@ -10,6 +10,6 @@
    - What is this?
    3. Start modification to create the prisma client.
 
-### 20251008 - Creating `schema.prisma`
+### 20251006 -
 
-1.
+1. `npx prisma init`
